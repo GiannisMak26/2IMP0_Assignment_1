@@ -1,0 +1,76 @@
+INIT GLOBAL VARS
+void abort();
+void __VERIFIER_assert(int cond);
+int __VERIFIER_nondet_int();
+void __VERIFIER_assume(int);
+int elem_exists(int set[], int size, int value);
+int main();
+   int n = 0;
+   int set[3];
+   int x;
+   int y;
+   int v;
+   for
+   v = 0;
+   [v < 3]
+   int element = 0;
+   int __CPAchecker_TMP_0;
+   elem_exists(set, n, element)
+      int i;
+      for
+      i = 0;
+      [!(i < size)]
+      return 0;
+   [__CPAchecker_TMP_0 == 0]
+   set[n] = element;
+   int __CPAchecker_TMP_1 = n;
+   n = n + 1;
+   __CPAchecker_TMP_1;
+   v = v + 1;
+   [v < 3]
+   int element = 0;
+   int __CPAchecker_TMP_0;
+   elem_exists(set, n, element)
+      int i;
+      for
+      i = 0;
+      [i < size]
+      [(set[i]) == value]
+      return 0;
+   [__CPAchecker_TMP_0 == 0]
+   set[n] = element;
+   int __CPAchecker_TMP_1 = n;
+   n = n + 1;
+   __CPAchecker_TMP_1;
+   v = v + 1;
+   [v < 3]
+   int element = 0;
+   int __CPAchecker_TMP_0;
+   elem_exists(set, n, element)
+      int i;
+      for
+      i = 0;
+      [i < size]
+      [(set[i]) == value]
+      return 0;
+   [__CPAchecker_TMP_0 == 0]
+   set[n] = element;
+   int __CPAchecker_TMP_1 = n;
+   n = n + 1;
+   __CPAchecker_TMP_1;
+   v = v + 1;
+   [!(v < 3)]
+   for
+   x = 0;
+   [x < 3]
+   for
+   y = 0;
+   [!(y < x)]
+   x = x + 1;
+   [x < 3]
+   for
+   y = 0;
+   [y < x]
+   __VERIFIER_assert((set[x]) != (set[y]))
+      [cond == 0]
+      Label: ERROR

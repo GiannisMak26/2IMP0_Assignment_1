@@ -1,0 +1,51 @@
+MODULE Node(ID)
+	DEFINE
+		ownID := ID;
+	VAR
+		leader: boolean;
+		maxID: 0..3;
+		receivedID: 0..3;
+		
+	ASSIGN
+		init(maxID) := ownID;
+		init(leader) := FALSE;
+		init(receivedID) := 0;
+
+		next(leader) :=
+			case
+				receivedID = ownID: TRUE;
+				TRUE: leader;
+			esac;
+					
+		next(maxID) := 
+			case
+				receivedID > maxID : receivedID;
+				TRUE: maxID;
+			esac;
+
+MODULE main
+	VAR
+		node1 : Node(2);
+		node2 : Node(3);
+		node3 : Node(1);
+		
+	ASSIGN
+		next(node2.receivedID) := node1.maxID;
+		next(node3.receivedID) := node2.maxID;
+		next(node1.receivedID) := node3.maxID;
+
+---------------------------------------------------------------------------------------------------------
+
+	SPEC AF (node1.leader | node2.leader | node3.leader); 														--Eventually there is always a leader 
+	LTLSPEC !G (node1.leader | node2.leader | node3.leader); 													--Not every state has a leader
+
+	SPEC A [(node1.receivedID = 0 & node2.receivedID = 0 & node3.receivedID = 0) 								--ReceivedID is initialized to 0
+		U (node1.receivedID = node3.maxID & node2.receivedID = node1.maxID & node3.receivedID = node2.maxID)]; 	--until ReceivedID is maxID of previous node
+
+	SPEC node1.ownID > node2.ownID & node1.ownID > node3.ownID -> AF node1.leader;								--If node1 has the largest ID, it will always eventually become the leader
+	SPEC node2.ownID > node1.ownID & node2.ownID > node3.ownID -> AF node2.leader;								--If node2 has the largest ID, it will always eventually become the leader
+	SPEC node3.ownID > node1.ownID & node3.ownID > node2.ownID -> AF node3.leader;								--If node3 has the largest ID, it will always eventually become the leader
+	
+	LTLSPEC G node1.leader -> !node2.leader & !node3.leader;													--If one node is leader, the others are not
+	LTLSPEC G node2.leader -> !node1.leader & !node3.leader;
+	LTLSPEC G node3.leader -> !node2.leader & !node1.leader;

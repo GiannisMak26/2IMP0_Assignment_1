@@ -1,0 +1,132 @@
+** coverage results:
+[main.coverage.1] file numbers.c line 128 function main decision/condition 'argc < 2' false: FAILED
+[main.coverage.2] file numbers.c line 128 function main decision/condition 'argc < 2' true: FAILED
+[isPrime.coverage.1] file numbers.c line 14 function isPrime decision/condition 'num == 2' false: SATISFIED
+[isPrime.coverage.2] file numbers.c line 14 function isPrime decision/condition 'num == 2' true: FAILED
+[isPrime.coverage.3] file numbers.c line 15 function isPrime MC/DC independence condition '!(num == 1) && !(num % 2 == 0)': SATISFIED
+[isPrime.coverage.4] file numbers.c line 15 function isPrime MC/DC independence condition '!(num == 1) && num % 2 == 0': SATISFIED
+[isPrime.coverage.5] file numbers.c line 15 function isPrime MC/DC independence condition 'num == 1 && !(num % 2 == 0)': FAILED
+[isPrime.coverage.6] file numbers.c line 15 function isPrime decision 'num == 1 || num % 2 == 0' false: SATISFIED
+[isPrime.coverage.7] file numbers.c line 15 function isPrime decision 'num == 1 || num % 2 == 0' true: SATISFIED
+[isPrime.coverage.8] file numbers.c line 15 function isPrime condition 'num == 1' false: SATISFIED
+[isPrime.coverage.9] file numbers.c line 15 function isPrime condition 'num == 1' true: FAILED
+[isPrime.coverage.10] file numbers.c line 15 function isPrime condition 'num % 2 == 0' false: SATISFIED
+[isPrime.coverage.11] file numbers.c line 15 function isPrime condition 'num % 2 == 0' true: SATISFIED
+[isPrime.coverage.12] file numbers.c line 16 function isPrime decision/condition 'i * i <= num' false: SATISFIED
+[isPrime.coverage.13] file numbers.c line 16 function isPrime decision/condition 'i * i <= num' true: SATISFIED
+[isPrime.coverage.14] file numbers.c line 18 function isPrime decision/condition 'num % i == 0' false: SATISFIED
+[isPrime.coverage.15] file numbers.c line 18 function isPrime decision/condition 'num % i == 0' true: SATISFIED
+[isSquare.coverage.1] file numbers.c line 28 function isSquare decision/condition 'i * i < n' false: SATISFIED
+[isSquare.coverage.2] file numbers.c line 28 function isSquare decision/condition 'i * i < n' true: SATISFIED
+[isSquare.coverage.3] file numbers.c line 31 function isSquare decision/condition 'i * i <= n' false: SATISFIED
+[isSquare.coverage.4] file numbers.c line 31 function isSquare decision/condition 'i * i <= n' true: SATISFIED
+[isPerfect.coverage.1] file numbers.c line 37 function isPerfect decision/condition 'n == 1' false: SATISFIED
+[isPerfect.coverage.2] file numbers.c line 37 function isPerfect decision/condition 'n == 1' true: FAILED
+[isPerfect.coverage.3] file numbers.c line 40 function isPerfect decision/condition 'i * i < n' false: SATISFIED
+[isPerfect.coverage.4] file numbers.c line 40 function isPerfect decision/condition 'i * i < n' true: SATISFIED
+[isPerfect.coverage.5] file numbers.c line 41 function isPerfect decision/condition 'n % i == 0' false: SATISFIED
+[isPerfect.coverage.6] file numbers.c line 41 function isPerfect decision/condition 'n % i == 0' true: SATISFIED
+[isPerfect.coverage.7] file numbers.c line 46 function isPerfect decision/condition 'i * i == n' false: SATISFIED
+[isPerfect.coverage.8] file numbers.c line 46 function isPerfect decision/condition 'i * i == n' true: SATISFIED
+[isPerfect.coverage.9] file numbers.c line 49 function isPerfect decision/condition 'res == n' false: SATISFIED
+[isPerfect.coverage.10] file numbers.c line 49 function isPerfect decision/condition 'res == n' true: FAILED
+[isMersenne.coverage.1] file numbers.c line 58 function isMersenne decision/condition 'res < n' false: SATISFIED
+[isMersenne.coverage.2] file numbers.c line 58 function isMersenne decision/condition 'res < n' true: SATISFIED
+[isMersenne.coverage.3] file numbers.c line 63 function isMersenne decision/condition 'n == res' false: SATISFIED
+[isMersenne.coverage.4] file numbers.c line 63 function isMersenne decision/condition 'n == res' true: SATISFIED
+[isFibonacci.coverage.1] file numbers.c line 70 function isFibonacci decision/condition 'b < n' false: SATISFIED
+[isFibonacci.coverage.2] file numbers.c line 70 function isFibonacci decision/condition 'b < n' true: SATISFIED
+[isFibonacci.coverage.3] file numbers.c line 75 function isFibonacci decision/condition 'b <= n' false: SATISFIED
+[isFibonacci.coverage.4] file numbers.c line 75 function isFibonacci decision/condition 'b <= n' true: SATISFIED
+[number_test.coverage.1] file numbers.c line 80 function number_test MC/DC independence condition '!(n > 99) && n <= 1000': SATISFIED
+[number_test.coverage.2] file numbers.c line 80 function number_test MC/DC independence condition 'n > 99 && !(n <= 1000)': SATISFIED
+[number_test.coverage.3] file numbers.c line 80 function number_test MC/DC independence condition 'n > 99 && n <= 1000': SATISFIED
+[number_test.coverage.4] file numbers.c line 80 function number_test decision 'n > 99 && n <= 1000' false: SATISFIED
+[number_test.coverage.5] file numbers.c line 80 function number_test decision 'n > 99 && n <= 1000' true: SATISFIED
+[number_test.coverage.6] file numbers.c line 80 function number_test condition 'n > 99' false: SATISFIED
+[number_test.coverage.7] file numbers.c line 80 function number_test condition 'n > 99' true: SATISFIED
+[number_test.coverage.8] file numbers.c line 80 function number_test condition 'n <= 1000' false: SATISFIED
+[number_test.coverage.9] file numbers.c line 80 function number_test condition 'n <= 1000' true: SATISFIED
+[number_test.coverage.10] file numbers.c line 81 function number_test decision/condition 'n < 100' false: SATISFIED
+[number_test.coverage.11] file numbers.c line 81 function number_test decision/condition 'n < 100' true: FAILED
+[number_test.coverage.12] file numbers.c line 94 function number_test decision/condition 'perfect != FALSE' false: SATISFIED
+[number_test.coverage.13] file numbers.c line 94 function number_test decision/condition 'perfect != FALSE' true: FAILED
+[number_test.coverage.14] file numbers.c line 95 function number_test decision/condition 'square != FALSE' false: SATISFIED
+[number_test.coverage.15] file numbers.c line 95 function number_test decision/condition 'square != FALSE' true: SATISFIED
+[number_test.coverage.16] file numbers.c line 96 function number_test decision/condition 'prime != FALSE' false: SATISFIED
+[number_test.coverage.17] file numbers.c line 96 function number_test decision/condition 'prime != FALSE' true: SATISFIED
+[number_test.coverage.18] file numbers.c line 97 function number_test decision/condition 'mersenne != FALSE' false: SATISFIED
+[number_test.coverage.19] file numbers.c line 97 function number_test decision/condition 'mersenne != FALSE' true: SATISFIED
+[number_test.coverage.20] file numbers.c line 98 function number_test decision/condition 'fibonacci != FALSE' false: SATISFIED
+[number_test.coverage.21] file numbers.c line 98 function number_test decision/condition 'fibonacci != FALSE' true: SATISFIED
+[number_test.coverage.22] file numbers.c line 100 function number_test decision/condition 'prime != FALSE' false: SATISFIED
+[number_test.coverage.23] file numbers.c line 100 function number_test decision/condition 'prime != FALSE' true: SATISFIED
+[number_test.coverage.24] file numbers.c line 102 function number_test decision/condition 'square != FALSE' false: SATISFIED
+[number_test.coverage.25] file numbers.c line 102 function number_test decision/condition 'square != FALSE' true: SATISFIED
+[number_test.coverage.26] file numbers.c line 104 function number_test decision/condition 'perfect != FALSE' false: SATISFIED
+[number_test.coverage.27] file numbers.c line 104 function number_test decision/condition 'perfect != FALSE' true: FAILED
+[number_test.coverage.28] file numbers.c line 106 function number_test decision/condition 'mersenne != FALSE' false: SATISFIED
+[number_test.coverage.29] file numbers.c line 106 function number_test decision/condition 'mersenne != FALSE' true: SATISFIED
+[number_test.coverage.30] file numbers.c line 108 function number_test decision/condition 'fibonacci != FALSE' false: SATISFIED
+[number_test.coverage.31] file numbers.c line 108 function number_test decision/condition 'fibonacci != FALSE' true: SATISFIED
+[number_test.coverage.32] file numbers.c line 111 function number_test MC/DC independence condition 'fibonacci != FALSE && prime != FALSE && !(square != FALSE) && !(perfect != FALSE) && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.33] file numbers.c line 111 function number_test MC/DC independence condition 'fibonacci != FALSE && !(prime != FALSE) && square != FALSE && !(perfect != FALSE) && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.34] file numbers.c line 111 function number_test MC/DC independence condition 'fibonacci != FALSE && !(prime != FALSE) && !(square != FALSE) && perfect != FALSE && !(mersenne != FALSE)': FAILED
+[number_test.coverage.35] file numbers.c line 111 function number_test MC/DC independence condition 'fibonacci != FALSE && !(prime != FALSE) && !(square != FALSE) && !(perfect != FALSE) && mersenne != FALSE': FAILED
+[number_test.coverage.36] file numbers.c line 111 function number_test MC/DC independence condition 'fibonacci != FALSE && !(prime != FALSE) && !(square != FALSE) && !(perfect != FALSE) && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.37] file numbers.c line 111 function number_test MC/DC independence condition '!(fibonacci != FALSE) && prime != FALSE && !(square != FALSE) && !(perfect != FALSE) && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.38] file numbers.c line 111 function number_test condition 'square != FALSE' false: SATISFIED
+[number_test.coverage.39] file numbers.c line 111 function number_test condition 'square != FALSE' true: SATISFIED
+[number_test.coverage.40] file numbers.c line 111 function number_test condition 'prime != FALSE' false: SATISFIED
+[number_test.coverage.41] file numbers.c line 111 function number_test condition 'prime != FALSE' true: SATISFIED
+[number_test.coverage.42] file numbers.c line 111 function number_test condition 'perfect != FALSE' false: SATISFIED
+[number_test.coverage.43] file numbers.c line 111 function number_test condition 'perfect != FALSE' true: FAILED
+[number_test.coverage.44] file numbers.c line 111 function number_test condition 'mersenne != FALSE' false: SATISFIED
+[number_test.coverage.45] file numbers.c line 111 function number_test condition 'mersenne != FALSE' true: SATISFIED
+[number_test.coverage.46] file numbers.c line 111 function number_test condition 'fibonacci != FALSE' false: SATISFIED
+[number_test.coverage.47] file numbers.c line 111 function number_test condition 'fibonacci != FALSE' true: SATISFIED
+[number_test.coverage.48] file numbers.c line 111 function number_test decision 'fibonacci != FALSE && (prime != FALSE || square != FALSE || perfect != FALSE || mersenne != FALSE)' false: SATISFIED
+[number_test.coverage.49] file numbers.c line 111 function number_test decision 'fibonacci != FALSE && (prime != FALSE || square != FALSE || perfect != FALSE || mersenne != FALSE)' true: SATISFIED
+[number_test.coverage.50] file numbers.c line 115 function number_test MC/DC independence condition 'prime != FALSE && fibonacci != FALSE && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.51] file numbers.c line 115 function number_test MC/DC independence condition 'prime != FALSE && !(fibonacci != FALSE) && mersenne != FALSE': SATISFIED
+[number_test.coverage.52] file numbers.c line 115 function number_test MC/DC independence condition 'prime != FALSE && !(fibonacci != FALSE) && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.53] file numbers.c line 115 function number_test MC/DC independence condition '!(prime != FALSE) && fibonacci != FALSE && !(mersenne != FALSE)': SATISFIED
+[number_test.coverage.54] file numbers.c line 115 function number_test condition 'prime != FALSE' false: SATISFIED
+[number_test.coverage.55] file numbers.c line 115 function number_test condition 'prime != FALSE' true: SATISFIED
+[number_test.coverage.56] file numbers.c line 115 function number_test condition 'mersenne != FALSE' false: SATISFIED
+[number_test.coverage.57] file numbers.c line 115 function number_test condition 'mersenne != FALSE' true: SATISFIED
+[number_test.coverage.58] file numbers.c line 115 function number_test condition 'fibonacci != FALSE' false: SATISFIED
+[number_test.coverage.59] file numbers.c line 115 function number_test condition 'fibonacci != FALSE' true: SATISFIED
+[number_test.coverage.60] file numbers.c line 115 function number_test decision 'prime != FALSE && (fibonacci != FALSE || mersenne != FALSE)' false: SATISFIED
+[number_test.coverage.61] file numbers.c line 115 function number_test decision 'prime != FALSE && (fibonacci != FALSE || mersenne != FALSE)' true: SATISFIED
+[number_test.coverage.62] file numbers.c line 119 function number_test MC/DC independence condition 'prime != FALSE && square != FALSE && !(perfect != FALSE)': FAILED
+[number_test.coverage.63] file numbers.c line 119 function number_test MC/DC independence condition 'prime != FALSE && !(square != FALSE) && perfect != FALSE': FAILED
+[number_test.coverage.64] file numbers.c line 119 function number_test MC/DC independence condition 'prime != FALSE && !(square != FALSE) && !(perfect != FALSE)': SATISFIED
+[number_test.coverage.65] file numbers.c line 119 function number_test MC/DC independence condition '!(prime != FALSE) && square != FALSE && !(perfect != FALSE)': SATISFIED
+[number_test.coverage.66] file numbers.c line 119 function number_test condition 'square != FALSE' false: SATISFIED
+[number_test.coverage.67] file numbers.c line 119 function number_test condition 'square != FALSE' true: SATISFIED
+[number_test.coverage.68] file numbers.c line 119 function number_test condition 'prime != FALSE' false: SATISFIED
+[number_test.coverage.69] file numbers.c line 119 function number_test condition 'prime != FALSE' true: SATISFIED
+[number_test.coverage.70] file numbers.c line 119 function number_test condition 'perfect != FALSE' false: SATISFIED
+[number_test.coverage.71] file numbers.c line 119 function number_test condition 'perfect != FALSE' true: FAILED
+[number_test.coverage.72] file numbers.c line 119 function number_test decision 'prime != FALSE && (square != FALSE || perfect != FALSE)' false: SATISFIED
+[number_test.coverage.73] file numbers.c line 119 function number_test decision 'prime != FALSE && (square != FALSE || perfect != FALSE)' true: FAILED
+[number_test.coverage.74] file numbers.c line 121 function number_test decision/condition '0 != 0' false: FAILED
+[number_test.coverage.75] file numbers.c line 121 function number_test decision/condition '0 != 0' true: FAILED
+
+** 95 of 114 covered (83.3%)
+** Used 12 iterations
+
+Test suite:
+n=-200654992
+n=1607458931
+n=936
+n=937
+n=939
+n=511
+n=225
+n=233
+n=127
+n=144
+n=610
+

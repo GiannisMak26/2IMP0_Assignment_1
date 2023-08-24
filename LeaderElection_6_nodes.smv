@@ -1,0 +1,63 @@
+MODULE Node(ID)
+	DEFINE
+		ownID := ID;
+	VAR
+		leader: boolean;
+		maxID: 0..6;
+		receivedID: 0..6;
+		
+	ASSIGN
+		init(maxID) := ownID;
+		init(leader) := FALSE;
+		init(receivedID) := 0;
+
+		next(leader) :=
+			case
+			receivedID = ownID: TRUE;
+				TRUE: leader;
+			esac;
+					
+		next(maxID) := 
+			case
+				receivedID > maxID : receivedID;
+				TRUE: maxID;
+			esac;
+
+MODULE main
+	VAR
+		node1 : Node(1);
+		node2 : Node(2);
+		node3 : Node(3);
+		node4 : Node(4);
+		node5 : Node(5);
+		node6 : Node(6);
+		
+	ASSIGN
+		next(node2.receivedID) := node1.maxID;
+		next(node3.receivedID) := node2.maxID;
+		next(node4.receivedID) := node3.maxID;
+		next(node5.receivedID) := node4.maxID;
+		next(node6.receivedID) := node5.maxID;
+		next(node1.receivedID) := node6.maxID;
+
+---------------------------------------------------------------------------------------------------------
+
+	SPEC AF (node1.leader | node2.leader | node3.leader | node4.leader | node5.leader | node6.leader); 														--Eventually there is always a leader 
+	LTLSPEC !G (node1.leader | node2.leader | node3.leader | node4.leader | node5.leader | node6.leader); 													--Not every state has a leader
+
+	SPEC A [(node1.receivedID = 0 & node2.receivedID = 0 & node3.receivedID = 0 & node4.receivedID = 0 & node5.receivedID = 0 & node6.receivedID = 0) 		--ReceivedID is initialized to 0, until ReceivedID is maxID of previous node
+		U (node1.receivedID = node6.maxID & node2.receivedID = node1.maxID & node3.receivedID = node2.maxID & node4.receivedID = node3.maxID & node5.receivedID = node4.maxID & node6.receivedID = node5.maxID)];
+
+	SPEC node1.ownID > node2.ownID & node1.ownID > node3.ownID & node1.ownID > node4.ownID & node1.ownID > node5.ownID & node1.ownID > node6.ownID -> AF node1.leader;			--If node1 has the largest ID, it will always eventually become the leader
+	SPEC node2.ownID > node1.ownID & node2.ownID > node3.ownID & node2.ownID > node4.ownID & node2.ownID > node5.ownID & node2.ownID > node6.ownID -> AF node2.leader;			--If node2 has the largest ID, it will always eventually become the leader
+	SPEC node3.ownID > node1.ownID & node3.ownID > node2.ownID & node3.ownID > node4.ownID & node3.ownID > node5.ownID & node3.ownID > node6.ownID -> AF node3.leader;			--If node3 has the largest ID, it will always eventually become the leader
+	SPEC node4.ownID > node1.ownID & node4.ownID > node2.ownID & node4.ownID > node3.ownID & node4.ownID > node5.ownID & node4.ownID > node6.ownID -> AF node4.leader;			--If node4 has the largest ID, it will always eventually become the leader
+	SPEC node5.ownID > node1.ownID & node5.ownID > node2.ownID & node5.ownID > node3.ownID & node5.ownID > node4.ownID & node5.ownID > node6.ownID -> AF node5.leader;			--If node5 has the largest ID, it will always eventually become the leader
+	SPEC node6.ownID > node1.ownID & node6.ownID > node2.ownID & node6.ownID > node3.ownID & node6.ownID > node4.ownID & node6.ownID > node5.ownID -> AF node6.leader;			--If node6 has the largest ID, it will always eventually become the leader
+	
+	LTLSPEC G node1.leader -> !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader;													--If one node is leader, the others are not
+	LTLSPEC G node2.leader -> !node1.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader;
+	LTLSPEC G node3.leader -> !node1.leader & !node2.leader & !node4.leader & !node5.leader & !node6.leader;
+	LTLSPEC G node4.leader -> !node1.leader & !node2.leader & !node3.leader & !node5.leader & !node6.leader;
+	LTLSPEC G node5.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node6.leader;
+	LTLSPEC G node6.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader;

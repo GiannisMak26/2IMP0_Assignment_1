@@ -1,0 +1,52 @@
+Test cases for numbers.c
+
+
+
+
+assert(number_test(-200654992) == -1);
+assert(number_test(1607458931) == 0);
+assert(number_test(936) == 0);
+assert(number_test(937) == 1);
+assert(number_test(939) == 0);
+assert(number_test(511) == 8);
+assert(number_test(225) == 2);
+assert(number_test(233) == 17);
+assert(number_test(127) == 9);
+assert(number_test(144) == 19);
+assert(number_test(610) == 16);
+assert(number_test(496) == 4);
+
+
+
+289 is not prime, is square, is not perfect, not mersenne, not fibonacci
+
+
+
+134 is not prime, is not square, is not perfect, is not mercenne, is not fibonnaci = 0
+129 is not prime, is not square, is not perfect, is not mercenne, is not fibonnaci = 0
+131 is prime, is not square, is not perfect, is not mercenne, is not fibonacci= 1
+144 is not prime, is square, is not mercenne, is not perfect, is fibonacci = 18
+128 is not prime, is not square, is not perfect, is not mercenne, is not fibo = 0
+169 is not prime, is square, is perfect, is not mercenne, is not fibo = 2
+
+Test case used is cover location
+
+
+Bug Fixes:
+isPrime: changed i*i < num to i*i <= num
+isMercenne: changed n <= res to n == res;
+isFibonnaci: changed a = b to a = b - a;
+
+1607458931
+936 is not prime, is not square, is not mercenne,is not perfect, is not fibo
+937 is a prime, is not square, is not perfect, is not mercenne, is not fibo = 1
+939 is not prime, is not square, is not perfect, is not mercene, is not fibo = 0
+511 is not prime, is not square, is not perfect, is mercenne, is not fibo = 8
+225 is not prime, is square, is not perfect, is not mercene, is ot fibo = 2
+233 is a prime, is not square, is not perfect, is not mercenne, is fibo = 17
+127 is a prime, is not square, is not perfect, is mercenne, is not fibo = 9
+144 is not a prime, is square, is not perfect, is not mercene, is fibo = 19
+610 is not a prime, is not square, is not perfect, is not mercene, is fibo = 16
+
+
+496 is not a prime, is not square, is perfect, is not mercene, is not fibo = 4

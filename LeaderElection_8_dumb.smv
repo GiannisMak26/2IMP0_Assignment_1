@@ -1,0 +1,138 @@
+MODULE Node(ID)
+	DEFINE
+		ownID := ID;
+	VAR
+		leader: boolean;
+		maxID: 0..8;
+		receivedID: 0..8;
+		sendBit: 0..3;
+		
+	ASSIGN
+		init(maxID) := ownID;
+		init(leader) := FALSE;
+		init(receivedID) := 0;
+
+		next(leader) :=
+			case
+			receivedID = ownID: TRUE;
+				TRUE: leader;
+			esac;
+					
+		next(maxID) := 
+			case
+				receivedID > maxID : receivedID;
+				TRUE: maxID;
+			esac;
+
+		--1 in 2 chance of sending maxID next iteration
+		next(sendBit) := { 2, 3};
+
+MODULE main
+	VAR
+		node1 : Node(1);
+		node2 : Node(2);
+		node3 : Node(3);
+		node4 : Node(4);
+		node5 : Node(5);
+		node6 : Node(6);
+		node7 : Node(7);
+		node8 : Node(8);
+		
+	ASSIGN
+		next(node2.receivedID) := 
+			case
+				node1.sendBit = 3: node1.maxID;
+				TRUE: node2.receivedID;
+			esac;
+		next(node3.receivedID) := 
+			case
+				node2.sendBit = 3: node2.maxID;
+				TRUE: node3.receivedID;
+			esac;
+		next(node4.receivedID) := 
+			case
+				node3.sendBit = 3: node3.maxID;
+				TRUE: node4.receivedID;
+			esac;
+		next(node5.receivedID) :=
+			case
+				node4.sendBit = 3: node4.maxID;
+				TRUE: node5.receivedID;
+			esac;
+		next(node6.receivedID) :=
+			case
+				node5.sendBit = 3: node5.maxID;
+				TRUE: node6.receivedID;
+			esac;
+		next(node7.receivedID) :=
+			case
+				node6.sendBit = 3: node6.maxID;
+				TRUE: node7.receivedID;
+			esac;
+		next(node8.receivedID) :=
+			case
+				node7.sendBit = 3: node7.maxID;
+				TRUE: node8.receivedID;
+			esac;
+		next(node1.receivedID) :=
+			case
+				node8.sendBit = 3: node8.maxID;
+				TRUE: node1.receivedID;
+			esac;
+
+---------------------------------------------------------------------------------------------------------
+	
+	--Eventually there is always a leader
+	SPEC AF (node1.leader | node2.leader | node3.leader | node4.leader | node5.leader | node6.leader | node7.leader | node8.leader); 	
+
+	--Not every state has a leader
+	LTLSPEC !G (node1.leader | node2.leader | node3.leader | node4.leader | node5.leader | node6.leader | node7.leader | node8.leader); 	
+	
+	--ReceivedID is initialized to 0, until ReceivedID is maxID of previous node
+	SPEC A [(node1.receivedID = 0 & node2.receivedID = 0 & node3.receivedID = 0 & node4.receivedID = 0 & node5.receivedID = 0 & node6.receivedID = 0 & node7.receivedID = 0 & node8.receivedID = 0) 		
+		U (node1.receivedID = node8.maxID & node2.receivedID = node1.maxID & node3.receivedID = node2.maxID & node4.receivedID = node3.maxID & node5.receivedID = node4.maxID & node6.receivedID = node5.maxID & node7.receivedID = node6.maxID & node8.receivedID = node7.maxID)];
+
+
+	--If node1 has the largest ID, it will always eventually become the leader
+	SPEC node1.ownID > node2.ownID & node1.ownID > node3.ownID & node1.ownID > node4.ownID & node1.ownID > node5.ownID & node1.ownID > node6.ownID & node1.ownID > node7.ownID & node1.ownID > node8.ownID -> AF node1.leader;		
+	
+	--If node2 has the largest ID, it will always eventually become the leader
+	SPEC node2.ownID > node1.ownID & node2.ownID > node3.ownID & node2.ownID > node4.ownID & node2.ownID > node5.ownID & node2.ownID > node6.ownID & node2.ownID > node7.ownID & node2.ownID > node8.ownID -> AF node2.leader;	
+	
+	--If node3 has the largest ID, it will always eventually become the leader
+	SPEC node3.ownID > node1.ownID & node3.ownID > node2.ownID & node3.ownID > node4.ownID & node3.ownID > node5.ownID & node3.ownID > node6.ownID & node3.ownID > node7.ownID & node3.ownID > node8.ownID -> AF node3.leader;		
+	
+	--If node4 has the largest ID, it will always eventually become the leader
+	SPEC node4.ownID > node1.ownID & node4.ownID > node2.ownID & node4.ownID > node3.ownID & node4.ownID > node5.ownID & node4.ownID > node6.ownID & node4.ownID > node7.ownID & node4.ownID > node8.ownID -> AF node4.leader;	
+	
+	--If node5 has the largest ID, it will always eventually become the leader
+	SPEC node5.ownID > node1.ownID & node5.ownID > node2.ownID & node5.ownID > node3.ownID & node5.ownID > node4.ownID & node5.ownID > node6.ownID & node5.ownID > node7.ownID & node5.ownID > node8.ownID  -> AF node5.leader;
+	
+	--If node6 has the largest ID, it will always eventually become the leader
+	SPEC node6.ownID > node1.ownID & node6.ownID > node2.ownID & node6.ownID > node3.ownID & node6.ownID > node4.ownID & node6.ownID > node5.ownID & node6.ownID > node7.ownID & node6.ownID > node8.ownID -> AF node6.leader;	
+	
+	--If node7 has the largest ID, it will always eventually become the leader
+    SPEC node7.ownID > node1.ownID & node7.ownID > node2.ownID & node7.ownID > node3.ownID & node7.ownID > node4.ownID & node7.ownID > node5.ownID & node7.ownID > node6.ownID & node7.ownID > node8.ownID -> AF node7.leader;	
+    
+    --If node8 has the largest ID, it will always eventually become the leader
+    SPEC node8.ownID > node1.ownID & node8.ownID > node2.ownID & node8.ownID > node3.ownID & node8.ownID > node4.ownID & node8.ownID > node5.ownID & node8.ownID > node6.ownID & node8.ownID > node7.ownID -> AF node8.leader;	
+
+
+	--If one node is leader, the others are not
+	LTLSPEC G node1.leader -> !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader;													
+	LTLSPEC G node2.leader -> !node1.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader;
+	LTLSPEC G node3.leader -> !node1.leader & !node2.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader;
+	LTLSPEC G node4.leader -> !node1.leader & !node2.leader & !node3.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader;
+	LTLSPEC G node5.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node6.leader & !node7.leader & !node8.leader;
+	LTLSPEC G node6.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node7.leader & !node8.leader;
+    LTLSPEC G node7.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node8.leader;
+    LTLSPEC G node8.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader;
+
+	FAIRNESS node1.sendBit = 3;
+	FAIRNESS node2.sendBit = 3;
+	FAIRNESS node3.sendBit = 3;
+	FAIRNESS node4.sendBit = 3;
+	FAIRNESS node5.sendBit = 3;
+	FAIRNESS node6.sendBit = 3;
+	FAIRNESS node7.sendBit = 3;
+	FAIRNESS node8.sendBit = 3;

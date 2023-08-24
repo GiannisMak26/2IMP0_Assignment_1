@@ -1,0 +1,99 @@
+MODULE Node(ID)
+	DEFINE
+		ownID := ID;
+	VAR
+		leader: boolean;
+		maxID: 0..9;
+		receivedID: 0..9;
+		
+	ASSIGN
+		init(maxID) := ownID;
+		init(leader) := FALSE;
+		init(receivedID) := 0;
+
+		next(leader) :=
+			case
+			receivedID = ownID: TRUE;
+				TRUE: leader;
+			esac;
+					
+		next(maxID) := 
+			case
+				receivedID > maxID : receivedID;
+				TRUE: maxID;
+			esac;
+
+MODULE main
+	VAR
+		node1 : Node(1);
+		node2 : Node(2);
+		node3 : Node(3);
+		node4 : Node(4);
+		node5 : Node(5);
+		node6 : Node(6);
+		node7 : Node(7);
+		node8 : Node(8);
+		node9 : Node(9);
+		
+	ASSIGN
+		next(node2.receivedID) := node1.maxID;
+		next(node3.receivedID) := node2.maxID;
+		next(node4.receivedID) := node3.maxID;
+		next(node5.receivedID) := node4.maxID;
+		next(node6.receivedID) := node5.maxID;
+		next(node7.receivedID) := node6.maxID;
+		next(node8.receivedID) := node7.maxID;
+		next(node9.receivedID) := node8.maxID;
+		next(node1.receivedID) := node9.maxID;
+
+---------------------------------------------------------------------------------------------------------
+	
+	--Eventually there is always a leader
+	SPEC AF (node1.leader | node2.leader | node3.leader | node4.leader | node5.leader | node6.leader | node7.leader | node8.leader | node9.leader); 	
+
+	--Not every state has a leader
+	LTLSPEC !G (node1.leader | node2.leader | node3.leader | node4.leader | node5.leader | node6.leader | node7.leader | node8.leader | node9.leader); 	
+	
+	--ReceivedID is initialized to 0, until ReceivedID is maxID of previous node
+	SPEC A [(node1.receivedID = 0 & node2.receivedID = 0 & node3.receivedID = 0 & node4.receivedID = 0 & node5.receivedID = 0 & node6.receivedID = 0 & node7.receivedID = 0 & node8.receivedID = 0 & node9.receivedID = 0) 		
+		U (node1.receivedID = node9.maxID & node2.receivedID = node1.maxID & node3.receivedID = node2.maxID & node4.receivedID = node3.maxID & node5.receivedID = node4.maxID & node6.receivedID = node5.maxID & node7.receivedID = node6.maxID & node8.receivedID = node7.maxID & node9.receivedID = node8.maxID)];
+
+
+	--If node1 has the largest ID, it will always eventually become the leader
+	SPEC node1.ownID > node2.ownID & node1.ownID > node3.ownID & node1.ownID > node4.ownID & node1.ownID > node5.ownID & node1.ownID > node6.ownID & node1.ownID > node7.ownID & node1.ownID > node8.ownID & node1.ownID > node9.ownID -> AF node1.leader;		
+	
+	--If node2 has the largest ID, it will always eventually become the leader
+	SPEC node2.ownID > node1.ownID & node2.ownID > node3.ownID & node2.ownID > node4.ownID & node2.ownID > node5.ownID & node2.ownID > node6.ownID & node2.ownID > node7.ownID & node2.ownID > node8.ownID & node2.ownID > node9.ownID -> AF node2.leader;	
+	
+	--If node3 has the largest ID, it will always eventually become the leader
+	SPEC node3.ownID > node1.ownID & node3.ownID > node2.ownID & node3.ownID > node4.ownID & node3.ownID > node5.ownID & node3.ownID > node6.ownID & node3.ownID > node7.ownID & node3.ownID > node8.ownID & node3.ownID > node9.ownID -> AF node3.leader;		
+	
+	--If node4 has the largest ID, it will always eventually become the leader
+	SPEC node4.ownID > node1.ownID & node4.ownID > node2.ownID & node4.ownID > node3.ownID & node4.ownID > node5.ownID & node4.ownID > node6.ownID & node4.ownID > node7.ownID & node4.ownID > node8.ownID & node4.ownID > node9.ownID -> AF node4.leader;	
+	
+	--If node5 has the largest ID, it will always eventually become the leader
+	SPEC node5.ownID > node1.ownID & node5.ownID > node2.ownID & node5.ownID > node3.ownID & node5.ownID > node4.ownID & node5.ownID > node6.ownID & node5.ownID > node7.ownID & node5.ownID > node8.ownID & node5.ownID > node9.ownID  -> AF node5.leader;
+	
+	--If node6 has the largest ID, it will always eventually become the leader
+	SPEC node6.ownID > node1.ownID & node6.ownID > node2.ownID & node6.ownID > node3.ownID & node6.ownID > node4.ownID & node6.ownID > node5.ownID & node6.ownID > node7.ownID & node6.ownID > node8.ownID & node6.ownID > node9.ownID -> AF node6.leader;	
+	
+	--If node7 has the largest ID, it will always eventually become the leader
+    SPEC node7.ownID > node1.ownID & node7.ownID > node2.ownID & node7.ownID > node3.ownID & node7.ownID > node4.ownID & node7.ownID > node5.ownID & node7.ownID > node6.ownID & node7.ownID > node8.ownID & node7.ownID > node9.ownID -> AF node7.leader;	
+    
+    --If node8 has the largest ID, it will always eventually become the leader
+    SPEC node8.ownID > node1.ownID & node8.ownID > node2.ownID & node8.ownID > node3.ownID & node8.ownID > node4.ownID & node8.ownID > node5.ownID & node8.ownID > node6.ownID & node8.ownID > node7.ownID & node8.ownID > node9.ownID -> AF node8.leader;	
+
+    --If node9 has the largest ID, it will always eventually become the leader
+    SPEC node9.ownID > node1.ownID & node9.ownID > node2.ownID & node9.ownID > node3.ownID & node9.ownID > node4.ownID & node9.ownID > node5.ownID & node9.ownID > node6.ownID & node9.ownID > node7.ownID & node9.ownID > node8.ownID -> AF node9.leader;	
+
+
+	--If one node is leader, the others are not
+	LTLSPEC G node1.leader -> !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader & !node9.leader;													
+	LTLSPEC G node2.leader -> !node1.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader & !node9.leader;
+	LTLSPEC G node3.leader -> !node1.leader & !node2.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader & !node9.leader;
+	LTLSPEC G node4.leader -> !node1.leader & !node2.leader & !node3.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader & !node9.leader;
+	LTLSPEC G node5.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node6.leader & !node7.leader & !node8.leader & !node9.leader;
+	LTLSPEC G node6.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node7.leader & !node8.leader & !node9.leader;
+    LTLSPEC G node7.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node8.leader & !node9.leader;
+    LTLSPEC G node8.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node9.leader;
+    LTLSPEC G node9.leader -> !node1.leader & !node2.leader & !node3.leader & !node4.leader & !node5.leader & !node6.leader & !node7.leader & !node8.leader;
